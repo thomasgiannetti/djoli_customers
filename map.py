@@ -157,9 +157,6 @@ map = create_map()
 
 st.title('Djoli Map of Customers - Abidjan')
 st.markdown('')
-st.markdown('**Legend**')
-st.markdown(''':orange[Formal Restaurants]''')
-st.markdown(''':green[Semi-Formal Restaurants]''')
-st.markdown(''':gray[Informal Restaurants]''')
+st.markdown('**Click on a restaurant to find out more !**')
    
 folium_static(map, width=750)
