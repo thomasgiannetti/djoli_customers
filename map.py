@@ -28,8 +28,7 @@ def run_sql_query(query, mydb):
     return result
 
 # Define SQL queries
-query1 = """
-SELECT 
+query1 = """SELECT 
     o.restaurantID, 
     ROUND(COUNT(DISTINCT(o.orderID))) AS num_orders, 
     ROUND(SUM(o.totalprice)) AS total_ordered, 
@@ -39,8 +38,7 @@ JOIN restaurants r ON r.restaurantID = o.restaurantID
 GROUP BY o.restaurantID;
 """
 
-query2 = """
-SELECT 
+query2 = """SELECT 
     restaurantID, 
     ROUND(AVG(num_orders),1) AS avg_weekly_recurrence
 FROM (
