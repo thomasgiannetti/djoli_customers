@@ -150,6 +150,7 @@ def create_map():
     
       folium.Marker(location=[row['latitude'], row['longitude']], icon=folium.Icon(color=marker_color, icon='map-marker', prefix='fa'), popup=popup).add_to(m) 
   return m
-  
+
 map = create_map()
-st.write(map)
+
+st_folium(map, width=1500)
