@@ -109,7 +109,6 @@ merged_df = pd.merge(merged_df, df6, on='restaurantID')
 merged_df = merged_df.dropna(subset=['latitude', 'longitude'])
 
 def create_map():
-  if 'map' not in st.session_state or st.session_state.map is None:
     m = folium.Map(location=[5.345317, -4.024429], zoom_start=12)
 
     for index, row in merged_df.iterrows():
@@ -150,8 +149,7 @@ def create_map():
             marker_color = 'gray' 
     
         folium.Marker(location=[row['latitude'], row['longitude']], icon=folium.Icon(color=marker_color, icon='map-marker', prefix='fa'), popup=popup).add_to(m) 
-    st.session_state.map = m  # Save the map in the session state
-  return st.session_state.map
+  return m
 
 
 map = create_map()
