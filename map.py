@@ -7,9 +7,13 @@ import mysql.connector as connection
 # Establish MySQL connection
 @st.cache(allow_output_mutation=True)
 def get_mysql_connection():
-    mydb = connection.connect(host="...", database="...", user="...", passwd="...", port=..., use_pure=True)
+    mydb = connection.connect(host="db-djoli-mysql-do-user-14041340-0.b.db.ondigitalocean.com", 
+                              database="Djoli",
+                              user="doadmin",
+                              passwd="AVNS_-9GS1aN10LcIonhOplk",
+                              port=25060,
+                              use_pure=True)
     return mydb
-
 # Cached SQL queries
 @st.cache(allow_output_mutation=True)
 def run_sql_query(query, mydb):
