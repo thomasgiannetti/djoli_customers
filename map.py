@@ -153,4 +153,4 @@ def create_map():
 
 
 map = create_map()
-st_folium(map, width=1500)
+folium_static(map, width=1500)
