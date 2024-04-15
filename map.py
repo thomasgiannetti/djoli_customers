@@ -108,7 +108,6 @@ merged_df = pd.merge(merged_df, df5, on='restaurantID')
 merged_df = pd.merge(merged_df, df6, on='restaurantID')
 merged_df = merged_df.dropna(subset=['latitude', 'longitude'])
 
-@st.cache(allow_output_mutation=True)
 def create_map():
   m = folium.Map(location=[5.345317, -4.024429], zoom_start=12)
 
