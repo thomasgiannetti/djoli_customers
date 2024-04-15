@@ -64,7 +64,7 @@ GROUP BY o.restaurantID;"""
 query5 = """SELECT *
 FROM restaurants r;"""
 
-query6 : query = """WITH RankedSKUs AS (
+query6 = """WITH RankedSKUs AS (
     SELECT
         r.restaurantID,
         sk.name AS sku,
