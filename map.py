@@ -109,48 +109,50 @@ merged_df = pd.merge(merged_df, df6, on='restaurantID')
 merged_df = merged_df.dropna(subset=['latitude', 'longitude'])
 
 def create_map():
-  m = folium.Map(location=[5.345317, -4.024429], zoom_start=12)
+  if 'map' not in st.session_state or st.session_state.map is None:
+    m = folium.Map(location=[5.345317, -4.024429], zoom_start=12)
 
-  for index, row in merged_df.iterrows():
-      total_gmv_formatted = "{:,.0f}".format(row['total_ordered'])
-      basket_size_formatted = "{:,.0f}".format(row['basket_size'])
-      volume_formatted = "{:,.0f}".format(row['volume'])
-      order_weight_formatted = "{:,.0f}".format(row['avg_order_weight'])
-      activity_rate_formatted = "{:,.0f}".format(row['activity_rate'] * 100)
+    for index, row in merged_df.iterrows():
+        total_gmv_formatted = "{:,.0f}".format(row['total_ordered'])
+        basket_size_formatted = "{:,.0f}".format(row['basket_size'])
+        volume_formatted = "{:,.0f}".format(row['volume'])
+        order_weight_formatted = "{:,.0f}".format(row['avg_order_weight'])
+        activity_rate_formatted = "{:,.0f}".format(row['activity_rate'] * 100)
 
-      iframe_content = (
-          f"<b>Restaurant:</b> {row['name']} <br><br>"
-          f"<b>Contact:</b> {row['contact']} <br><br>"
-          f"<b>Type:</b> {row['type']} <br>"
-          f"<b>Cuisine:</b> {row['cuisine']} <br><br>"
-          f"<b>KPIs:</b> <br>"
-          f"Total GMV: {total_gmv_formatted} <br>"
-          f"Basket Size: {basket_size_formatted} <br>"
-          f"Number of Orders: {row['num_orders']} <br>"
-          f"Average Recurrence: {row['avg_weekly_recurrence']} <br>"
-          f"# Active Months: {row['months_activity']} <br>"
-          f"Activity Rate: {activity_rate_formatted} % <br>"
-          f"Volume: {volume_formatted} kg <br>"
-          f"Average Weight of Order: {order_weight_formatted} kg <br><br>"
-          f"<b>Top Product 1:</b> {row['highest_sku']} <br>"
-          f"<b>Top Product 2:</b> {row['second_highest_sku']} <br>"
-          f"<b>Top Product 3:</b> {row['third_highest_sku']} <br>"
-      )
+        iframe_content = (
+            f"<b>Restaurant:</b> {row['name']} <br><br>"
+            f"<b>Contact:</b> {row['contact']} <br><br>"
+            f"<b>Type:</b> {row['type']} <br>"
+            f"<b>Cuisine:</b> {row['cuisine']} <br><br>"
+            f"<b>KPIs:</b> <br>"
+            f"Total GMV: {total_gmv_formatted} <br>"
+            f"Basket Size: {basket_size_formatted} <br>"
+            f"Number of Orders: {row['num_orders']} <br>"
+            f"Average Recurrence: {row['avg_weekly_recurrence']} <br>"
+            f"# Active Months: {row['months_activity']} <br>"
+            f"Activity Rate: {activity_rate_formatted} % <br>"
+            f"Volume: {volume_formatted} kg <br>"
+            f"Average Weight of Order: {order_weight_formatted} kg <br><br>"
+            f"<b>Top Product 1:</b> {row['highest_sku']} <br>"
+            f"<b>Top Product 2:</b> {row['second_highest_sku']} <br>"
+            f"<b>Top Product 3:</b> {row['third_highest_sku']} <br>"
+        )
 
-      popup = folium.Popup(iframe_content, min_width=300, max_width=300)
+        popup = folium.Popup(iframe_content, min_width=300, max_width=300)
     
-      if row['type'] == "Formel":
-          marker_color = 'orange'
-      elif row['type'] == "Semi-Formel":
-          marker_color = 'green'
-      elif row['type'] == "Informel":
-          marker_color = 'black'
-      else:
-          marker_color = 'gray' 
+        if row['type'] == "Formel":
+            marker_color = 'orange'
+        elif row['type'] == "Semi-Formel":
+            marker_color = 'green'
+        elif row['type'] == "Informel":
+            marker_color = 'black'
+        else:
+            marker_color = 'gray' 
     
-      folium.Marker(location=[row['latitude'], row['longitude']], icon=folium.Icon(color=marker_color, icon='map-marker', prefix='fa'), popup=popup).add_to(m) 
-  return m
+        folium.Marker(location=[row['latitude'], row['longitude']], icon=folium.Icon(color=marker_color, icon='map-marker', prefix='fa'), popup=popup).add_to(m) 
+    st.session_state.map = m  # Save the map in the session state
+  return st.session_state.map
+
 
 map = create_map()
-
 st_folium(map, width=1500)
