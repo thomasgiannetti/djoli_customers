@@ -7,6 +7,7 @@ import matplotlib.colors as mcolors
 import numpy as np
 import folium
 from streamlit_folium import st_folium
+import streamlit as st
 
 
 mydb = connection.connect(host="db-djoli-mysql-do-user-14041340-0.b.db.ondigitalocean.com", 
