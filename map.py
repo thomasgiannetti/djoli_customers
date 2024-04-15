@@ -148,4 +148,5 @@ for index, row in merged_df.iterrows():
     
     folium.Marker(location=[row['latitude'], row['longitude']], icon=folium.Icon(color=marker_color, icon='map-marker', prefix='fa'), popup=popup).add_to(m) 
 
-st_folium(m, width=1500)
+with st.form(key="smth"):
+  st_folium(m, width=2000)
